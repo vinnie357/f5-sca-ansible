@@ -1,0 +1,8 @@
+docker run --rm -it \
+  -v ~/.ssh:/root/.ssh \
+  -v $(pwd):/ansible \
+  -v $(pwd)/.aws/credentials:/.boto/credentials:ro \
+  -v $(pwd)/.aws/config:/.boto/config:ro \
+  -e AWS_ACCESS_KEY_ID='yourkeyid' \
+  -e AWS_SECRET_ACCESS_KEY='yourkey' \
+  f5-sca-ansible "$@"

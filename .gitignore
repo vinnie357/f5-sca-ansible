@@ -1,0 +1,4 @@
+group_vars/all
+host_vars/*/vault.yaml
+aws/credentials
+

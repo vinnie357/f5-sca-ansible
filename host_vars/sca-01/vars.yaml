@@ -1,0 +1,17 @@
+provider:
+  name: "mazza-sca-test"
+  compliance: "SCCA"
+  cidr: "10.0.0.0/16"
+  aws:
+    s3:
+      bucket: 
+        name: "f5-sca-mazza"
+        folder: "f5-sca-securitystack"
+    ec2:
+      sshkeyname: "mazza-aws"
+  license:
+    bigip1: "DRYKL-ELSMZ-WJXQI-DKXTG-AEGUOBP"
+    bigip2: "KZZLD-FKXHJ-MMBOO-GWPCR-SZHHSVP"
+    bigip3: "RVWFL-LYZEA-VQENZ-URZBM-DYUIGSV"
+    bigip4: "CMSZT-MUIZR-FUTGN-CBTPV-BAJILBY"
+  
