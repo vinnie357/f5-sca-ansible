@@ -259,7 +259,7 @@
           "restrictedSrcAddress": "0.0.0.0/0",
           "declarationUrlrouting": {
             "Fn::Sub": [
-              "https://raw.githubusercontent.com/mikeoleary/aws-sca-resources/master/routingBaseline.json",
+              "none",
               {
                 "S3Region": {
                   "Fn::If": [
@@ -332,7 +332,7 @@
           "restrictedSrcAddress": "0.0.0.0/0",
           "declarationUrlrouting": {
             "Fn::Sub": [
-              "https://raw.githubusercontent.com/mikeoleary/aws-sca-resources/master/routingBaseline.json",
+              "none",
               {
                 "S3Region": {
                   "Fn::If": [
