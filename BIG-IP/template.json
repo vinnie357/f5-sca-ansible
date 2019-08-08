@@ -1478,8 +1478,8 @@
                             "VIP1='",
                             {
                             "Fn::GetAtt": [
-                            "Bigip1subnet1Az1Interface",
-                            "PrimaryPrivateIpAddress"
+                                "Bigip1VipEipAssociation",
+                                "PrivateIpAddress"
                             ]
                             },
                             "'\n",
@@ -1571,8 +1571,8 @@
                           "virtualAddress='",
                           {
                           "Fn::GetAtt": [
-                          "Bigip1subnet1Az1Interface",
-                          "PrimaryPrivateIpAddress"
+                            "Bigip1VipEipAssociation",
+                            "PrivateIpAddress"
                           ]
                           },
                           "'\n",
