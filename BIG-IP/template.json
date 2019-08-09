@@ -1476,7 +1476,18 @@
                             },
                             "'\n",
                             "VIP1='",
-                            { "Fn::Select" : [ "0", [ { "Fn::GetAtt": ["Bigip1subnet1Az1Interface","SecondaryPrivateIpAddresses" ] } ] ] },
+                            { 
+                              "Fn::Select" : [ 
+                              "0", 
+                              [ { 
+                                "Fn::GetAtt": [
+                                "Bigip1subnet1Az1Interface",
+                                "SecondaryPrivateIpAddresses" 
+                                ] 
+                                } 
+                              ]
+                              ] 
+                              },
                             "'\n",
                             "VIP2='",
                             {
@@ -1564,7 +1575,18 @@
                           "partition=\"mgmt\"",
                           "\n",
                           "virtualAddress='",
-                          { "Fn::Select" : [ "0", [ { "Fn::GetAtt": ["Bigip1subnet1Az1Interface","SecondaryPrivateIpAddresses" ] } ] ] },
+                          { 
+                            "Fn::Select" : [ 
+                            "0", 
+                            [ { 
+                              "Fn::GetAtt": [
+                              "Bigip1subnet1Az1Interface",
+                              "SecondaryPrivateIpAddresses" 
+                              ] 
+                              } 
+                            ]
+                            ] 
+                            },
                           "'\n",
                           "virtualAddress2='",
                           {
