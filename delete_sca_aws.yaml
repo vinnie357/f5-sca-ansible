@@ -1,0 +1,24 @@
+- name: delete sca stack
+  hosts: sca-dev
+  gather_facts: false
+  serial: 1
+  vars:
+    provider: "{{ hostvars[inventory_hostname]['provider'] }}"
+    vault: "{{ inventory_dir }}/host_vars/{{ inventory_hostname }}/vault.yml"
+  tasks:
+    - name: delete sca stack
+      cloudformation:
+        stack_name: "{{provider.name}}"
+        state: "absent"
+        region: "{{awsRegion}}"
+      delegate_to: localhost
+    # - name: revoke license
+    #   bigip_device_license:
+    #     state: "revoked"
+    #     license_key: "{{item}}"
+    #     provider:
+    #       server: "lb.mydomain.com"
+    #       user: "admin"
+    #       password: "secret"
+    #   delegate_to: localhost
+    #   loop: "{{ provider.licenses }}"

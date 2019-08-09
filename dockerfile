@@ -12,3 +12,5 @@ COPY ansible.cfg /etc/ansible/ansible.cfg
 
 
 COPY . .
+
+RUN ansible-galaxy install f5devcentral.f5ansible,master

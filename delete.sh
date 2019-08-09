@@ -7,5 +7,5 @@ docker run --rm -it \
   -v $(pwd)/aws/:/home/.aws/:ro \
   -e AWS_ACCESS_KEY_ID=${keyid} \
   -e AWS_SECRET_ACCESS_KEY=${key} \
-  f5-sca-ansible ansible-playbook deploy_sca_aws.yaml
+  f5-sca-ansible ansible-playbook delete_sca_aws.yaml
  
