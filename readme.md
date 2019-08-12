@@ -6,6 +6,8 @@
 # get latest sca
 git clone https://github.com/mikeoleary/f5-sca-securitystack.git
 
+git clone --branch mazza-bigip-tierx-apps https://github.com/mikeoleary/f5-sca-securitystack.git 
+
 ## customize hosts
 
 ## build docker image
@@ -45,3 +47,13 @@ aws configure
 # aws cli tasks
 aws cloudformation list-stacks | grep stack-name
 aws cloudformation delete-stack --stack-name stack-name
+
+# template testing
+aws cloudformation validate-template --template-url https://mustBeS3bucket.com/path/to/json.json
+
+# get your public IPs
+
+aws ec2 describe-instances --filters "Name=key-name,Values=yourkey,Name=tag:Group,Values=f5group" --query 'Reservations[*].Instances[*].[PublicIpAddress]'
+
+example:
+aws ec2 describe-instances --filters "Name=key-name,Values=mazza-aws,Name=tag:Group,Values=f5group" --query 'Reservations[*].Instances[*].[PublicIpAddress]'

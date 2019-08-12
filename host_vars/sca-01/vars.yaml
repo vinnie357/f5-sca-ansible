@@ -6,18 +6,18 @@ provider:
     s3:
       bucket: 
         name: "f5-sca-mazza"
-        folder: "f5-sca-securitystack"
+        folder: "mazza-bigip-tierx-apps"
     ec2:
       sshkeyname: "mazza-aws"
   license:
-    bigip1: "DRYKL-ELSMZ-WJXQI-DKXTG-AEGUOBP"
-    bigip2: "KZZLD-FKXHJ-MMBOO-GWPCR-SZHHSVP"
-    bigip3: "RVWFL-LYZEA-VQENZ-URZBM-DYUIGSV"
-    bigip4: "CMSZT-MUIZR-FUTGN-CBTPV-BAJILBY"
+    bigip1: "UKCRM-SZVGO-FUHKL-TFTMG-XJVDFLC"
+    bigip2: "UKHIY-AUFMO-CWCSI-ZUTJN-IJYUVTC"
+    bigip3: "GLGCU-VJZAS-VSNIA-GWHDS-QKDYTMU"
+    bigip4: "SAGIE-CQTTS-ULIAR-GXUKK-ZHVPUHN"
   licenses: [
-    "DRYKL-ELSMZ-WJXQI-DKXTG-AEGUOBP",
-    "KZZLD-FKXHJ-MMBOO-GWPCR-SZHHSVP",
-    "RVWFL-LYZEA-VQENZ-URZBM-DYUIGSV",
-    "CMSZT-MUIZR-FUTGN-CBTPV-BAJILBY"
+    "UKCRM-SZVGO-FUHKL-TFTMG-XJVDFLC",
+    "UKHIY-AUFMO-CWCSI-ZUTJN-IJYUVTC",
+    "GLGCU-VJZAS-VSNIA-GWHDS-QKDYTMU",
+    "SAGIE-CQTTS-ULIAR-GXUKK-ZHVPUHN"
   ]
   
