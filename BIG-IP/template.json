@@ -1669,7 +1669,7 @@
           "app1-baseline-tier1": {
             "commands": {
                 "085-apply-app1-baseline": { 
-                    "test" : "[ -f /config/appBaseline.sh ]",
+                    "test" : "[ -f /config/deployapp1.sh ]",
                     "command": { 
                        "Fn::Join": [  
                         " ", 
