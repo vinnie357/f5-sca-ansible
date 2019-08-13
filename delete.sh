@@ -5,7 +5,7 @@ revokeLicense() {
 # presents as Unknown exception during ping ://:8080
 hosts=$(aws ec2 describe-instances --filters "Name=key-name,Values=mazza-aws,Name=tag:Group,Values=f5group" --query 'Reservations[*].Instances[*].[PublicIpAddress]')
 keyfile="~/keys/aws"
-command='run util bash && key=$(cat /config/bigip.license | grep "Registration Key" | awk '{ print $4}' ) && yes | tmsh revoke sys license registration-key ${key}'
+command='run /util bash -c "yes | tmsh revoke sys license"'
 for host in $hosts
 do
     echo $host
@@ -55,8 +55,8 @@ docker run --rm -it \
 run () {
 
 echo "starting"
-# license=$(revokeLicense)
-# echo $license
+license=$(revokeLicense)
+echo $license
 echo "deleting buckets"
 buckets=$(deleteBuckets)
 echo $buckets
