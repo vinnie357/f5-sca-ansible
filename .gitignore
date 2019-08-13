@@ -3,3 +3,4 @@ host_vars/*/vault.yaml
 aws/credentials
 f5-sca-security-stack
 .gitattributes
+f5-sca-securitystack
