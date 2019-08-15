@@ -10,14 +10,8 @@ provider:
     ec2:
       sshkeyname: "mazza-aws"
   license:
-    bigip1: "UHZUR-UJGYN-CWWWB-ZWHKE-DRNQUTG"
-    bigip2: "BMQVM-RJVRK-DKSIF-WWHER-MVUYIRQ"
-    bigip3: "IKKJT-QFPWT-OAWKA-UBAMJ-QCPSHGE"
-    bigip4: "HLJUA-BEPNV-KRXMF-LGFHY-GOJEHHA"
-  licenses: [
-    "UHZUR-UJGYN-CWWWB-ZWHKE-DRNQUTG",
-    "BMQVM-RJVRK-DKSIF-WWHER-MVUYIRQ",
-    "IKKJT-QFPWT-OAWKA-UBAMJ-QCPSHGE",
-    "HLJUA-BEPNV-KRXMF-LGFHY-GOJEHHA"
-  ]
+    bigip1: "OWEFD-SMYGR-HWZLK-JRXIS-GOHVRYW"
+    bigip2: "-"
+    bigip3: "-"
+    bigip4: "-"
   
