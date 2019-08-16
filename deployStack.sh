@@ -41,6 +41,7 @@ done
 
 updateSrc () {
 
+#git clone https://github.com/mikeoleary/f5-sca-securitystack.git --branch mazza-bigip-tierx-apps
 echo "updating src files"
 src=$(pwd)
 mkdir -p f5-sca-securitystack
