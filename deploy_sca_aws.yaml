@@ -12,7 +12,8 @@
         state: "present"
         region: "{{awsRegion}}"
         disable_rollback: true
-        template: "f5-sca-securitystack/aws-quickstart-scca-main-same-net.json"
+        #template: "f5-sca-securitystack/aws-quickstart-scca-main-same-net.json"
+        template_url: "{{provider.aws.cf.template.url}}"
         template_parameters:
           licenseKey1: "{{provider.license.bigip1}}"
           licenseKey2: "{{provider.license.bigip2}}"

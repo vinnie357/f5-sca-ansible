@@ -39,26 +39,26 @@ done
 
 }
 
-updateSrc () {
+# updateSrc () {
 
-#git clone https://github.com/mikeoleary/f5-sca-securitystack.git --branch mazza-bigip-tierx-apps
-echo "updating src files"
-src=$(pwd)
-mkdir -p f5-sca-securitystack
-cd f5-sca-securitystack
-echo $(pwd)
-git pull https://github.com/mikeoleary/f5-sca-securitystack.git mazza-bigip-tierx-apps
-cd $src
-echo "done"
+# #git clone https://github.com/mikeoleary/f5-sca-securitystack.git --branch mazza-bigip-tierx-apps
+# echo "updating src files"
+# src=$(pwd)
+# mkdir -p f5-sca-securitystack
+# cd f5-sca-securitystack
+# echo $(pwd)
+# git pull https://github.com/mikeoleary/f5-sca-securitystack.git mazza-bigip-tierx-apps
+# cd $src
+# echo "done"
 
-}
+# }
 
 run () {
 
 echo "starting"
-echo "update src files"
-updateSrcResult=$(updateSrc)
-echo $updateSrcResult
+# echo "update src files"
+# updateSrcResult=$(updateSrc)
+# echo $updateSrcResult
 echo "starting Deployment"
 deployResult=$(deploy)
 echo $deployResult

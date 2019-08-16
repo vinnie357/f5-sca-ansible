@@ -9,6 +9,9 @@ provider:
         folder: "mazza-bigip-tierx-apps"
     ec2:
       sshkeyname: "mazza-aws"
+    cf:
+      template:
+        url: "https://f5-sca-mazza.s3.amazonaws.com/mazza-bigip-tierx-apps/aws-quickstart-scca-main-same-net.json"
   license:
     bigip1: "{{ vault_license.bigip1 }}"
     bigip2: "{{ vault_license.bigip2 }}"
