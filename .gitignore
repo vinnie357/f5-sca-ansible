@@ -4,3 +4,5 @@ aws/credentials
 f5-sca-security-stack
 .gitattributes
 f5-sca-securitystack
+.DS_Store
+load-keys.sh
