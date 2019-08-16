@@ -318,10 +318,7 @@
     },
     "F5BIGIP1": {
       "Type": "AWS::CloudFormation::Stack",
-      "DependsOn" : [
-            "TransitGatewayStack",
-            "F5BIGIP2"
-        ],
+      "DependsOn" : "TransitGatewayStack",
       "Properties": {
         "TemplateURL": {
           "Fn::Sub": [
