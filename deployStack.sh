@@ -55,7 +55,8 @@ done
 
 run () {
 
-echo "starting"
+echo "starting:" `date`
+start_time="$(date -u +%s)"
 # echo "update src files"
 # updateSrcResult=$(updateSrc)
 # echo $updateSrcResult
@@ -68,8 +69,10 @@ echo $getPassResult
 echo "get mgmt ips"
 getMgmtResult=$(getMgmt)
 echo $getMgmtResult
-echo "complete"
-
+end_time="$(date -u +%s)"
+elapsed="$((($end_time-$start_time)/60))"
+echo "complete:" `date`
+echo "minutes elapsed: $elapsed"
 }
 
 run

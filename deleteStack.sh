@@ -54,7 +54,8 @@ docker run --rm -it \
 
 run () {
 
-echo "starting"
+echo "starting" `date`
+start_time="$(date -u +%s)"
 license=$(revokeLicense)
 echo $license
 echo "deleting buckets"
@@ -64,7 +65,11 @@ echo "deleting stack"
 stack=$(deleteStack)
 echo $stack
 
-echo "complete"
+echo "complete" `date`
+end_time="$(date -u +%s)"
+elapsed="$((($end_time-$start_time)/60))"
+echo "minutes elapsed: $elapsed"
+
 }
 
 
