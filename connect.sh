@@ -3,5 +3,6 @@
 list=$(aws ec2 describe-instances --filters "Name=key-name,Values=mazza-aws,Name=tag:Group,Values=f5group" --query 'Reservations[*].Instances[*].[PublicIpAddress]')
 for host in $list
 do
-    cmd.exe /c start wsl.exe ssh -i ~/keys/aws admin@$host
+    cmd.exe /c start wsl.exe ssh -i ~/keys/aws -oStrictHostKeyChecking=no admin@$host
+    cmd.exe /c start chrome.exe https://$host
 done
