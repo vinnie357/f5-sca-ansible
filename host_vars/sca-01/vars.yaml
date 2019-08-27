@@ -9,6 +9,8 @@ provider:
         folder: "mazza-bigip-tierx-apps"
     ec2:
       sshkeyname: "mazza-aws"
+      tier1Size: "m5.xlarge"
+      tier2Size: "m5.2xlarge"
     cf:
       template:
         url: "https://f5-sca-mazza.s3.amazonaws.com/mazza-bigip-tierx-apps/aws-quickstart-scca-main-same-net.json"

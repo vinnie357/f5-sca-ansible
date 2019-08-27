@@ -18,15 +18,27 @@ do
     ssh -i $sshKey -oStrictHostKeyChecking=no admin@"$ip" 'modify cli preference pager disabled display-threshold 0; revoke sys license'
 done
 
+
+# run again when failed
+# hosts=$(aws ec2 describe-instances --filters "Name=key-name,Values=mazza-aws,Name=tag:Group,Values=f5group" --query 'Reservations[*].Instances[*].[PublicIpAddress]')
+# for ip in $hosts
+# do
+#     echo "revoke license for $ip"
+#     ssh -i $sshKey -oStrictHostKeyChecking=no admin@"$ip" 'modify cli preference pager disabled display-threshold 0; revoke sys license'
+# done
+# should see:
+# Data Input Error: An operational license is required.
+# if the license has been revoked successfully
+
 # # tier3, then tier 1 otherwise tier3 can't phone home
 # # presents as Unknown exception during ping ://:8080
 # hosts=$(aws ec2 describe-instances --filters "Name=key-name,Values=mazza-aws,Name=tag:Group,Values=f5group" --query 'Reservations[*].Instances[*].[PublicIpAddress]')
 # keyfile="~/keys/aws"
-# command='run /util bash -c "yes | tmsh revoke sys license"'
+# command='modify cli preference pager disabled display-threshold 0; revoke sys license'
 # for host in $hosts
 # do
 #     echo $host
-#     result=$(ssh -t -i $keyfile admin@$host "$command")
+#     result=$(ssh -t -i $keyfile -oStrictHostKeyChecking=no admin@$host "$command")
 #     echo $result
 # done
  

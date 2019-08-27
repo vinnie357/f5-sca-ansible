@@ -26,6 +26,8 @@
           pQuickstartS3KeyPrefix: "{{provider.aws.s3.bucket.folder}}"
           pVdssVpcCidr: "{{provider.cidr}}"
           sshKey: "{{provider.aws.ec2.sshkeyname}}"
+          instanceTypeTier1: "{{provider.aws.ec2.tier1Size}}"
+          instanceTypeTier2: "{{provider.aws.ec2.tier2Size}}"
         tags:
           Stack: "ansible-sca-cloudformation"
       delegate_to: localhost
