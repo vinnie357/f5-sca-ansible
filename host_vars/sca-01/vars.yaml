@@ -9,11 +9,14 @@ provider:
         folder: "mazza-bigip-tierx-apps"
     ec2:
       sshkeyname: "mazza-aws"
-      tier1Size: "m5.xlarge"
-      tier2Size: "m5.2xlarge"
+      tier1Size: "c4.xlarge"
+      tier2Size: "c4.2xlarge"
     cf:
       template:
         url: "https://f5-sca-mazza.s3.amazonaws.com/mazza-bigip-tierx-apps/aws-quickstart-scca-main-same-net.json"
+      pipeline:
+        url: "https://f5-sca-mazza.s3.amazonaws.com/mazza-bigip-tierx-apps/deploy-pipeline.template"
+        name: "sca-git-pipeline"
   license:
     bigip1: "{{ vault_license.bigip1 }}"
     bigip2: "{{ vault_license.bigip2 }}"
