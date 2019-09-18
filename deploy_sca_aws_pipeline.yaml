@@ -17,8 +17,8 @@
         capabilities: ["CAPABILITY_AUTO_EXPAND","CAPABILITY_IAM","CAPABILITY_NAMED_IAM"]
         template_parameters:
           BranchName: "{{provider.aws.s3.bucket.folder}}"
-          GitHubOwner: "mikeoleary"
-          OAuthSecretName: "sca-git-pipeline-api"
+          GitHubOwner: "vinnie357"
+          OAuthSecretName: "sca-git-pipeline"
           RepositoryName: "f5-sca-securitystack"
           S3Bucket: "{{provider.aws.s3.bucket.name}}"
           S3Key: "{{provider.aws.s3.bucket.folder}}"

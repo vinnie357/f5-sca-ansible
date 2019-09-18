@@ -1,11 +1,19 @@
-#!/usr/bin/bash
-# tier3, then tier 1 otherwise tier3 can't phone home
-# presents as Unknown exception during ping ://:8080
-hosts=$(aws ec2 describe-instances --filters "Name=key-name,Values=mazza-aws,Name=tag:Group,Values=f5group" --query 'Reservations[*].Instances[*].[PublicIpAddress]')
-keyfile="~/keys/aws"
-command='run util bash && key=$(cat /config/bigip.license | grep "Registration Key" | awk '{ print $4}' ) && yes | tmsh revoke sys license registration-key ${key}'
-for host in $hosts
+#!/bin/bash
+stackName=${AWS_STACK_NAME}
+
+stackName="mazza-sca-test"
+sshKey="~/keys/aws"
+
+# find BIG-IP management IP addresses, deprovision internal stacks before external stacks
+for ip in `aws cloudformation list-exports --query "Exports[?contains(Name, '$stackName')]|[?contains(Name, 'BIGIP2')]|[?contains(Name, 'Management')].[Value]"`;
 do
-    result=$(ssh -t -i $keyfile admin@$host "$command")
-    echo $result
+    echo "revoke license for $ip"
+    ssh -i $sshKey -oStrictHostKeyChecking=no admin@"$ip" 'modify cli preference pager disabled display-threshold 0; revoke sys license'
+done
+
+# deprovision external stack 
+for ip in `aws cloudformation list-exports --query "Exports[?contains(Name, '$stackName')]|[?contains(Name, 'BIGIP1')]|[?contains(Name, 'Management')].[Value]"`;
+do
+    echo "revoke license for $ip"
+    ssh -i $sshKey -oStrictHostKeyChecking=no admin@"$ip" 'modify cli preference pager disabled display-threshold 0; revoke sys license'
 done

@@ -6,3 +6,4 @@ f5-sca-security-stack
 f5-sca-securitystack
 .DS_Store
 load-keys.sh
+.env_vars_helper.sh

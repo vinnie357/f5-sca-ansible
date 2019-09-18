@@ -1,8 +1,9 @@
 roles
 ansible_helper
 readme.md
-aws
+aws/credentials
 f5-sca-security-stack
 .gitattributes
 LICENSE
 run.sh
+.env_vars_helper.sh

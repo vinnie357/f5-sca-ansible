@@ -87,6 +87,7 @@ echo "starting" `date`
 start_time="$(date -u +%s)"
 license=$(revokeLicense)
 echo $license
+read -p 'Press [Enter] key to continue...'
 echo "deleting buckets"
 buckets=$(deleteBuckets)
 echo $buckets
