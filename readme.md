@@ -1,21 +1,28 @@
-# setup
+# User setup
+## Configure your enviroment choices in ansible:
+host_vars
+    host
+        vars.yaml
+        vault.yaml
 
-make setup
+## AWS credentials
+Set IAM access key in aws
 
-make build
+set your key values for the script:
 
-make aws
+create credentials file for aws:
+```bash
+cat > aws/credentials <<EOF
+aws_access_key_id = XXXXXXXXXXXXXX
+aws_secret_access_key = X1X1xxXxx1xxX0xxxxxxX
+EOF
+```
 
-
-make azure
-
-
-# needs boto3 botocore
-
-# env script
-.env_vars_helper.sh
+## env vars script for docker
+Set your vars and create the script
 
 ```bash
+cat > .env_vars_helper.sh <<EOF
 #!/bin/bash
 # set vars
 aws_key_id=$(cat aws/credentials | grep aws_access_key_id | awk '{print $3}' )
@@ -35,4 +42,15 @@ export BIGIQ_PASSWORD=""
 # ansible vault
 export ANSIBLE_VAULT_PASSWORD=""
 echo "done"
+EOF
 ```
+
+# running:
+
+## aws:
+make aws
+## azure:
+make azure
+
+## to do:
+make azure

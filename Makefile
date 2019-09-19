@@ -1,5 +1,6 @@
 .PHONY: build test deploy aws azure
 
+default: setup build test
 
 build:
 	docker build --build-arg AWS_REGION=${AWS_REGION} -t f5-sca-ansible-dev .
@@ -12,9 +13,9 @@ deployAWS:
 	f5-sca-ansible-dev \
 	bash -c "ansible-playbook deploy_sca_aws.yaml"
 
-aws: build test deployAWS
+aws: setup build test deployAWS
 
-azure: build test deployAzure
+azure: setup build test deployAzure
 
 setup:
 	@echo "make vault keys"
