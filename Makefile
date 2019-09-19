@@ -50,7 +50,7 @@ connect:
 	f5-sca-ansible-dev \
 	bash -c "./scripts/connect.sh"
 
-destroy: revokelicense deletestack
+destroy: revokelicense deletebuckets deletestack
 
 revokelicense:
 	@echo "revoke license"
@@ -63,6 +63,18 @@ revokelicense:
 	-v ${SSH_KEY_DIR}/${SSH_KEY_NAME}:/root/.ssh/${SSH_KEY_NAME}:ro \
 	f5-sca-ansible-dev \
 	bash -c "./scripts/revokeLicenses.sh 2>/dev/null"
+deletebuckets:
+	@echo "delete buckets"
+	@docker run --rm -it \
+	-e AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID} \
+	-e AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY} \
+	-e AWS_DEFAULT_REGION=${AWS_REGION} \
+	-e SSH_KEY_NAME=${SSH_KEY_NAME} \
+	-e AWS_STACK_NAME=${AWS_STACK_NAME} \
+	-v $(pwd)/aws/:/home/.aws/:ro \
+	-v ${SSH_KEY_DIR}/${SSH_KEY_NAME}:/root/.ssh/${SSH_KEY_NAME}:ro \
+	f5-sca-ansible-dev \
+	bash -c "./scripts/deleteBuckets.sh 2>/dev/null"
 
 deletestack:
 	@echo "delete stack"
@@ -86,6 +98,7 @@ shell:
 	-e AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY} \
 	-e AWS_DEFAULT_REGION=${AWS_REGION} \
 	-e SSH_KEY_NAME=${SSH_KEY_NAME} \
+	-e AWS_STACK_NAME=${AWS_STACK_NAME} \
 	-v $(pwd)/aws/:/home/.aws/:ro \
 	-v ${SSH_KEY_DIR}/${SSH_KEY_NAME}:/root/.ssh/${SSH_KEY_NAME}:ro \
 	f5-sca-ansible-dev
