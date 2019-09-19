@@ -1,9 +1,11 @@
 # User setup
 ## Configure your enviroment choices in ansible:
-host_vars
-    host
-        vars.yaml
-        vault.yaml
+```bash
+├── host_vars
+│   └── sca-01
+│       ├── vars.yaml
+│       └── vault.yaml
+```
 
 ## AWS credentials
 Set IAM access key in aws
@@ -29,7 +31,11 @@ aws_key_id=$(cat aws/credentials | grep aws_access_key_id | awk '{print $3}' )
 aws_key_value=$(cat aws/credentials | grep aws_secret_access_key | awk '{print $3}' )
 aws_region="us-east-1"
 aws_stack_name="yourstackname-sca-stack"
+ssh_key_dir="$(echo $HOME)/.ssh"
+ssh_key_name="id_rsa"
 # export vars
+export SSH_KEY_DIR=${ssh_key_dir}
+export SSH_KEY_NAME=${ssh_key_name}
 export AWS_ACCESS_KEY_ID=${aws_key_id}
 export AWS_SECRET_ACCESS_KEY=${aws_key_value}
 export AWS_REGION=${aws_region}
@@ -48,7 +54,9 @@ EOF
 # running:
 
 ## aws:
+. ./.env_vars_helper.sh
 make aws
+
 ## azure:
 make azure
 

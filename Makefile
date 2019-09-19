@@ -6,12 +6,18 @@ build:
 	docker build --build-arg AWS_REGION=${AWS_REGION} -t f5-sca-ansible-dev .
 
 deployAWS:
+	@echo "starting:" `date`
+	@start_time="$(date -u +%s)"
 	@docker run --rm -it \
-	-e AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}\
-	-e AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}\
+	-e AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID} \
+	-e AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY} \
 	-e AWS_DEFAULT_REGION=${AWS_REGION} \
 	f5-sca-ansible-dev \
 	bash -c "ansible-playbook deploy_sca_aws.yaml"
+	@end_time="$(date -u +%s)"
+	@elapsed="$((($end_time-$start_time)/60))"
+	@echo "complete:" `date`
+	@echo "minutes elapsed: $elapsed"
 
 aws: setup build test deployAWS
 
@@ -20,7 +26,7 @@ azure: setup build test deployAzure
 setup:
 	@echo "make vault keys"
 	@echo "configure aws creds"
-	.env_vars_helper.sh
+	#./.env_vars_helper.sh
 
 creds:
 	@docker run --rm -it \
@@ -36,6 +42,14 @@ connect:
 	#run docker get list
 	#print list
 	#connect to list
+	@docker run --rm -it \
+	-e AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID} \
+	-e AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY} \
+	-e AWS_STACK_NAME=${AWS_STACK_NAME} \
+	-e AWS_DEFAULT_REGION=${AWS_REGION} \
+	f5-sca-ansible-dev \
+	bash -c "./scripts/connect.sh"
+
 destroy: revokelicense deletestack
 
 revokelicense:
@@ -44,25 +58,36 @@ revokelicense:
 	-e AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID} \
 	-e AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY} \
 	-e AWS_DEFAULT_REGION=${AWS_REGION} \
+	-e SSH_KEY_NAME=${SSH_KEY_NAME} \
 	-v $(pwd)/aws/:/home/.aws/:ro \
-	-v ~/.ssh:/root/.ssh \
+	-v ${SSH_KEY_DIR}/${SSH_KEY_NAME}:/root/.ssh/${SSH_KEY_NAME}:ro \
 	f5-sca-ansible-dev \
-	bash -c ". scripts/revokeLicenses.sh"
+	bash -c "./scripts/revokeLicenses.sh 2>/dev/null"
+
 deletestack:
 	@echo "delete stack"
+	@echo "starting:" `date`
+	@start_time="$(date -u +%s)"
 	@docker run --rm -it \
-	-e AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}\
-	-e AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}\
+	-e AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID} \
+	-e AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY} \
 	-e AWS_DEFAULT_REGION=${AWS_REGION} \
 	f5-sca-ansible-dev \
 	bash -c "ansible-playbook delete_sca_aws.yaml"
+	@echo "complete" `date`
+	@end_time="$(date -u +%s)"
+	@elapsed="$((($end_time-$start_time)/60))"
+	@echo "minutes elapsed: $elapsed"
+
 shell:
 	@echo " run docker container"
 	@docker run --rm -it \
 	-e AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID} \
 	-e AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY} \
 	-e AWS_DEFAULT_REGION=${AWS_REGION} \
+	-e SSH_KEY_NAME=${SSH_KEY_NAME} \
 	-v $(pwd)/aws/:/home/.aws/:ro \
+	-v ${SSH_KEY_DIR}/${SSH_KEY_NAME}:/root/.ssh/${SSH_KEY_NAME}:ro \
 	f5-sca-ansible-dev
 
 test: test1 test2 test3 test4
