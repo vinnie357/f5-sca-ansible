@@ -17,9 +17,9 @@ deployAWS:
 	@end_time="$(date -u +%s)"
 	@elapsed="$((($end_time-$start_time)/60))"
 	@echo "complete:" `date`
-	@echo "minutes elapsed: $elapsed"
+	@echo "minutes elapsed: ${elapsed}"
 
-aws: setup build test deployAWS
+aws: setup build test deployAWS creds
 
 azure: setup build test deployAzure
 
@@ -89,7 +89,7 @@ deletestack:
 	@echo "complete" `date`
 	@end_time="$(date -u +%s)"
 	@elapsed="$((($end_time-$start_time)/60))"
-	@echo "minutes elapsed: $elapsed"
+	@echo "minutes elapsed: ${elapsed}"
 
 shell:
 	@echo " run docker container"
