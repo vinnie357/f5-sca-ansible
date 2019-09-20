@@ -2,7 +2,7 @@
 stackName=${AWS_STACK_NAME}
 # aws cloudformation  describe-stacks --stack-name mazza-sca-test-F5BIGIP1-Y70VNOIMPA2W
 #aws cloudformation list-exports --query "Exports[?contains(Name, '$stackName')]|[?contains(Name, 'BIGIP1')]|[?contains(Name, 'Management')].[Value]" | jq -r .[][]
-stacks=$(aws cloudformation  describe-stacks --query 'Stacks[?contains(StackName, `'$stackName-F5BIGIP'`) == `true`].StackName' | jq -r .[][])
+stacks=$(aws cloudformation  describe-stacks --query 'Stacks[?contains(StackName, `'$stackName-F5BIGIP'`) == `true`].StackName' | jq -r .[])
 for stack in $stacks
 do
     echo "name: $stack"

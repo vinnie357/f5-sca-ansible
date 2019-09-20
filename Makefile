@@ -27,6 +27,7 @@ setup:
 	@echo "make vault keys"
 	@echo "configure aws creds"
 	#./.env_vars_helper.sh
+	@echo "deploy pipeline"
 
 creds:
 	@docker run --rm -it \
