@@ -5,14 +5,14 @@ stackName="mazza-sca-test"
 sshKey="~/keys/aws"
 
 # find BIG-IP management IP addresses, deprovision internal stacks before external stacks
-for ip in `aws cloudformation list-exports --query "Exports[?contains(Name, '$stackName')]|[?contains(Name, 'BIGIP2')]|[?contains(Name, 'Management')].[Value]"`;
+for ip in `aws cloudformation list-exports --query "Exports[?contains(Name, '$stackName')]|[?contains(Name, 'F5InternalTier')]|[?contains(Name, 'Management')].[Value]"`;
 do
     echo "revoke license for $ip"
     ssh -i $sshKey -oStrictHostKeyChecking=no admin@"$ip" 'modify cli preference pager disabled display-threshold 0; revoke sys license'
 done
 
 # deprovision external stack 
-for ip in `aws cloudformation list-exports --query "Exports[?contains(Name, '$stackName')]|[?contains(Name, 'BIGIP1')]|[?contains(Name, 'Management')].[Value]"`;
+for ip in `aws cloudformation list-exports --query "Exports[?contains(Name, '$stackName')]|[?contains(Name, 'F5ExternalTier')]|[?contains(Name, 'Management')].[Value]"`;
 do
     echo "revoke license for $ip"
     ssh -i $sshKey -oStrictHostKeyChecking=no admin@"$ip" 'modify cli preference pager disabled display-threshold 0; revoke sys license'
@@ -46,9 +46,10 @@ done
 }
 
 deleteBuckets() {
-
+stackName=${AWS_STACK_NAME}
+region=${AWS_DEFAULT_REGION}
 # get buckets
-buckets=$(aws s3api list-buckets --query 'Buckets[?contains(Name, `mazza-sca-test`) == `true`].Name')
+buckets=$(aws s3api list-buckets --query 'Buckets[?contains(Name, `'$stackName-f5'`) == `true`].Name'| jq -r .[])
 # delete objects in bucket
 # aws s3 rm s3://bucket-name --recursive
 for bucket in $buckets
@@ -61,7 +62,7 @@ done
 for bucket in $buckets
 do
     echo delete files $bucket
-    aws s3api delete-bucket --bucket $bucket --region us-east-1
+    aws s3api delete-bucket --bucket $bucket --region $region
 done
 
 }

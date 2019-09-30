@@ -14,8 +14,8 @@ docker run --rm -it \
 }
 
 getPass () {
-
-buckets=$(aws s3api list-buckets --query 'Buckets[?contains(Name, `mazza-sca-test`) == `true`].Name')
+stackName=${AWS_STACK_NAME}
+buckets=$(aws s3api list-buckets --query "[Buckets][*][?contains(Name, '$stackName-f5')].[Name]" | jq -r .[][][])
 for bucket in $buckets
 do
     echo $bucket
@@ -26,8 +26,8 @@ done
 }
 
 getMgmt () {
-
-stacks=$(aws cloudformation  describe-stacks --query 'Stacks[?contains(StackName, `mazza-sca-test-F5BIGIP`) == `true`].StackName')
+stackName=${AWS_STACK_NAME}
+stacks=$(aws cloudformation  describe-stacks --query 'Stacks[?contains(StackName, `'$stackName-F5'`) == `true`].StackName' | jq -r .[])
 for stack in $stacks
 do
     echo $stack
