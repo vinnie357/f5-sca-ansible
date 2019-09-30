@@ -7,8 +7,8 @@ cat $sshKey > /root/.ssh/key
 key="/root/.ssh/key"
 chmod 600 $key
 
-tier1=$(aws cloudformation list-exports --query "Exports[?contains(Name, '$stackName')]|[?contains(Name, 'BIGIP2')]|[?contains(Name, 'Management')].[Value]" | jq -r .[][])
-tier2=$(aws cloudformation list-exports --query "Exports[?contains(Name, '$stackName')]|[?contains(Name, 'BIGIP1')]|[?contains(Name, 'Management')].[Value]" | jq -r .[][])
+tier1=$(aws cloudformation list-exports --query "Exports[?contains(Name, '$stackName')]|[?contains(Name, 'F5InternalTier')]|[?contains(Name, 'Management')].[Value]" | jq -r .[][])
+tier2=$(aws cloudformation list-exports --query "Exports[?contains(Name, '$stackName')]|[?contains(Name, 'F5ExternalTier')]|[?contains(Name, 'Management')].[Value]" | jq -r .[][])
 # find BIG-IP management IP addresses, deprovision internal stacks before external stacks
 for ip in ${tier1[@]} ;
 do

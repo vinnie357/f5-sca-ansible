@@ -1,4 +1,4 @@
-provider:
+sca:
   name: "mazza-sca-test"
   compliance: "SCCA"
   cidr: "10.0.0.0/16"
@@ -6,16 +6,16 @@ provider:
     s3:
       bucket: 
         name: "f5-sca-mazza"
-        folder: "master"
+        folder: "mazza-bigip-tierx-apps"
     ec2:
       sshkeyname: "mazza-aws"
       tier1Size: "c4.xlarge"
       tier2Size: "c4.2xlarge"
     cf:
       template:
-        url: "https://f5-sca-mazza.s3.amazonaws.com/master/aws-quickstart-scca-main-same-net.json"
+        url: "https://f5-sca-mazza.s3.amazonaws.com/mazza-bigip-tierx-apps/aws-quickstart-scca-main-same-net.json"
       pipeline:
-        url: "https://f5-sca-mazza.s3.amazonaws.com/master/deploy-pipeline.template"
+        url: "https://f5-sca-mazza.s3.amazonaws.com/mazza-bigip-tierx-apps/deploy-pipeline.template"
         name: "sca-git-pipeline"
   license:
     bigip1: "{{ vault_license.bigip1 }}"

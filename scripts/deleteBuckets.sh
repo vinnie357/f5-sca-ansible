@@ -8,7 +8,7 @@ then
     echo "make sure stack name is set"
     exit 1
 else
-    buckets=$(aws s3api list-buckets --query 'Buckets[?contains(Name, `'$stackName'`) == `true`].Name'| jq -r .[])
+    buckets=$(aws s3api list-buckets --query 'Buckets[?contains(Name, `'$stackName-f5'`) == `true`].Name'| jq -r .[])
     # delete objects in bucket
     # aws s3 rm s3://bucket-name --recursive
     for bucket in ${buckets[@]}

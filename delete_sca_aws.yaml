@@ -3,20 +3,20 @@
   gather_facts: false
   serial: 1
   vars:
-    provider: "{{ hostvars[inventory_hostname]['provider'] }}"
+    sca: "{{ hostvars[inventory_hostname]['sca'] }}"
     vault: "{{ inventory_dir }}/host_vars/{{ inventory_hostname }}/vault.yml"
   tasks:
     # - name: revoke licenses
     #   bigip_command:
     #     commands: revoke sys license
-    #     provider:
+    #     sca:
     #       server: "{{item.host}}"
     #       password: secret
     #       user: admin
     #   delegate_to: localhost
     - name: delete sca stack
       cloudformation:
-        stack_name: "{{provider.name}}"
+        stack_name: "{{sca.name}}"
         state: "absent"
         region: "{{awsRegion}}"
       delegate_to: localhost

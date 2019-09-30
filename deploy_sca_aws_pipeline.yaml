@@ -3,25 +3,25 @@
   gather_facts: false
   serial: 1
   vars:
-    provider: "{{ hostvars[inventory_hostname]['provider'] }}"
+    sca: "{{ hostvars[inventory_hostname]['sca'] }}"
     vault: "{{ inventory_dir }}/host_vars/{{ inventory_hostname }}/vault.yml"
   tasks:
     - name: create sca pipeline
       cloudformation:
-        stack_name: "{{provider.aws.cf.pipeline.name}}"
+        stack_name: "{{sca.aws.cf.pipeline.name}}"
         state: "present"
         region: "{{awsRegion}}"
         disable_rollback: true
         #template: "f5-sca-securitystack/aws-quickstart-scca-main-same-net.json"
-        template_url: "{{provider.aws.cf.pipeline.url}}"
+        template_url: "{{sca.aws.cf.pipeline.url}}"
         capabilities: ["CAPABILITY_AUTO_EXPAND","CAPABILITY_IAM","CAPABILITY_NAMED_IAM"]
         template_parameters:
-          BranchName: "{{provider.aws.s3.bucket.folder}}"
+          BranchName: "{{sca.aws.s3.bucket.folder}}"
           GitHubOwner: "vinnie357"
           OAuthSecretName: "sca-git-pipeline"
           RepositoryName: "f5-sca-securitystack"
-          S3Bucket: "{{provider.aws.s3.bucket.name}}"
-          S3Key: "{{provider.aws.s3.bucket.folder}}"
+          S3Bucket: "{{sca.aws.s3.bucket.name}}"
+          S3Key: "{{sca.aws.s3.bucket.folder}}"
         tags:
           Stack: "ansible-sca-cloudformation"
       delegate_to: localhost
