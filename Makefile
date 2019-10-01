@@ -19,6 +19,26 @@ deployAWS:
 	@echo "complete:" `date`
 	@echo "minutes elapsed: ${elapsed}"
 
+pipelineAWS: build deployPipelineAWS
+
+deployPipelineAWS:
+	@echo "deploy pipeline"
+	@docker run --rm -it \
+	-e AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID} \
+	-e AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY} \
+	-e AWS_DEFAULT_REGION=${AWS_REGION} \
+	f5-sca-ansible-dev \
+	bash -c "ansible-playbook deploy_sca_aws_pipeline.yaml"
+
+destroyPipelineAWS:
+	@echo "destroy pipeline"
+	@docker run --rm -it \
+	-e AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID} \
+	-e AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY} \
+	-e AWS_DEFAULT_REGION=${AWS_REGION} \
+	f5-sca-ansible-dev \
+	bash -c "ansible-playbook delete_sca_aws_pipeline.yaml"
+
 aws: setup build test deployAWS creds
 
 azure: setup build test deployAzure
