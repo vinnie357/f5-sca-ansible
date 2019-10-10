@@ -4,25 +4,31 @@
 sca:
   name: "mazza-sca-dev"
   compliance: "SCCA"
-  cidr: "10.0.0.0/16"
   git:
     owner: "mikeoleary"
-    branch: "work-mazza-tmsh-updates"
+    branch: "master"
   aws:
+    vpc:
+      vdss:
+        cidr: "10.0.0.0/16"
+      app:
+        cidr: "10.1.0.0/16"
+      fargate:
+        cidr: "10.2.0.0/16" 
     s3:
       bucket: 
         name: "f5-sca-mazza"
-        folder: "work-mazza-tmsh-updates"
+        folder: "master"
     ec2:
       sshkeyname: "mazza-aws"
       tier1Size: "c4.xlarge"
       tier2Size: "c4.2xlarge"
     cf:
       template:
-        url: "https://f5-sca-mazza.s3.amazonaws.com/work-mazza-tmsh-updates/aws-quickstart-scca-main-same-net.json"
+        url: "https://f5-sca-mazza.s3.amazonaws.com/master/aws-quickstart-scca-main-same-net.json"
       pipeline:
-        url: "https://f5-sca-mazza.s3.amazonaws.com/work-mazza-tmsh-updates/deploy-pipeline.template"
-        name: "sca-git-pipeline-work-mazza-tmsh-updates"
+        url: "https://f5-sca-mazza.s3.amazonaws.com/master/deploy-pipeline.template"
+        name: "sca-git-pipeline-master"
   license:
     bigip1: "{{ vault_license.bigip1 }}"
     bigip2: "{{ vault_license.bigip2 }}"

@@ -24,10 +24,12 @@
           pProject: "quickstart-f5-scca-security"
           pQuickstartS3BucketName: "{{sca.aws.s3.bucket.name}}"
           pQuickstartS3KeyPrefix: "{{sca.aws.s3.bucket.folder}}"
-          pVdssVpcCidr: "{{sca.cidr}}"
+          pVdssVpcCidr: "{{sca.aws.vpc.vdss.cidr}}"
+          pAppVpcCidr: "{{sca.aws.vpc.app.cidr}}"
+          pFargateVpcCidr: "{{sca.aws.vpc.fargate.cidr}}"
           sshKey: "{{sca.aws.ec2.sshkeyname}}"
-          instanceTypeTier1: "{{sca.aws.ec2.tier1Size}}"
-          instanceTypeTier2: "{{sca.aws.ec2.tier2Size}}"
+          instanceTypeExternalTier: "{{sca.aws.ec2.tier1Size}}"
+          instanceTypeInternalTier: "{{sca.aws.ec2.tier2Size}}"
         tags:
           Stack: "ansible-sca-cloudformation"
       delegate_to: localhost
