@@ -17,7 +17,8 @@ sca:
         cidr: "10.2.0.0/16" 
     s3:
       bucket: 
-        name: "f5-sca-mazza"
+        #name: "f5-sca-mazza"
+        name: "f5-sca-securitystack"
         folder: "master"
     ec2:
       sshkeyname: "mazza-aws"
@@ -25,9 +26,10 @@ sca:
       tier2Size: "c4.2xlarge"
     cf:
       template:
-        url: "https://f5-sca-mazza.s3.amazonaws.com/master/aws-quickstart-scca-main-same-net.json"
+        #url: "https://f5-sca-mazza.s3.amazonaws.com/master/aws-quickstart-scca-main-same-net.json"
+        url: https://f5-sca-securitystack.s3.amazonaws.com/master/aws-quickstart-scca-main-same-net.json
       pipeline:
-        url: "https://f5-sca-mazza.s3.amazonaws.com/master/deploy-pipeline.template"
+        url: "https://f5-sca-securitystack.s3.amazonaws.com/master/deploy-pipeline.template"
         name: "sca-git-pipeline-master"
   license:
     bigip1: "{{ vault_license.bigip1 }}"

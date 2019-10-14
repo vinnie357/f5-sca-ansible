@@ -80,11 +80,13 @@ revokelicense:
 	-e AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID} \
 	-e AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY} \
 	-e AWS_DEFAULT_REGION=${AWS_REGION} \
+	-e AWS_STACK_NAME=${AWS_STACK_NAME} \
 	-e SSH_KEY_NAME=${SSH_KEY_NAME} \
 	-v $(pwd)/aws/:/home/.aws/:ro \
 	-v ${SSH_KEY_DIR}/${SSH_KEY_NAME}:/root/.ssh/${SSH_KEY_NAME}:ro \
 	f5-sca-ansible-dev \
 	bash -c "./scripts/revokeLicenses.sh 2>/dev/null"
+	
 deletebuckets:
 	@echo "delete buckets"
 	@docker run --rm -it \

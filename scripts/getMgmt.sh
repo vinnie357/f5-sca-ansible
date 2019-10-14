@@ -12,8 +12,12 @@ do
         exit 1
     else
         item=$(echo "$stack" | xargs | sed 's/,//' )
-        box1=$(aws cloudformation describe-stacks --stack-name $item --query "Stacks[0].Outputs[?OutputKey=='Bigip1ManagementEipAddress'].OutputValue")
-        box2=$(aws cloudformation describe-stacks --stack-name $item --query "Stacks[0].Outputs[?OutputKey=='Bigip2ManagementEipAddress'].OutputValue")
+        #resources
+        box1=$(aws cloudformation list-stack-resources --stack-name $item --query "StackResourceSummaries[?contains(LogicalResourceId, 'Bigip1ManagementEipAddress')].PhysicalResourceId[]" | jq -r .[])
+        box2=$(aws cloudformation list-stack-resources --stack-name $item --query "StackResourceSummaries[?contains(LogicalResourceId, 'Bigip2ManagementEipAddress')].PhysicalResourceId[]" | jq -r .[])
+        #outputs
+        # box1=$(aws cloudformation describe-stacks --stack-name $item --query "Stacks[0].Outputs[?OutputKey=='Bigip1ManagementEipAddress'].OutputValue")
+        # box2=$(aws cloudformation describe-stacks --stack-name $item --query "Stacks[0].Outputs[?OutputKey=='Bigip2ManagementEipAddress'].OutputValue")
         mgmtIp="$box1, $box2"
         echo $mgmtIp
     fi
