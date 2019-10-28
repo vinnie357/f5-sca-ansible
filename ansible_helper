@@ -1,7 +1,0 @@
-docker run --rm -it \
-  -v ~/.ssh:/root/.ssh \
-  -v $(pwd):/ansible \
-  -v $(pwd)/aws/:/home/.aws/:ro \
-  -e AWS_ACCESS_KEY_ID='${keyid}' \
-  -e AWS_SECRET_ACCESS_KEY='${key}' \
-  f5-sca-ansible "$@"

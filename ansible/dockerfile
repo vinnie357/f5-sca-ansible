@@ -60,6 +60,8 @@ echo "region = ${AWS_REGION}" >> /home/.aws/config
 # cat /etc/passwd | grep root
 
 # files/playbooks
-COPY . .
+COPY . /etc/ansible
 
-WORKDIR /
+WORKDIR /etc/ansible
+
+RUN chmod 700 $PWD

@@ -54,8 +54,8 @@ EOF
 # running:
 
 ## aws:
-. ./.env_vars_helper.sh
-make aws
+- . ./.env_vars_helper.sh 
+- make aws
 
 ## azure:
 make azure
