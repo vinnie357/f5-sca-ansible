@@ -109,7 +109,7 @@ revokelicense:
 	-v $(pwd)/aws/:/home/.aws/:ro \
 	-v ${SSH_KEY_DIR}/${SSH_KEY_NAME}:/root/.ssh/${SSH_KEY_NAME}:ro \
 	f5-sca-ansible-dev \
-	bash -c "/etc/ansible/scripts/revokeLicenses.sh 2>/dev/null"
+	bash -c "/etc/ansible/.ssh_key.sh && /etc/ansible/scripts/revokeLicenses.sh 2>/dev/null"
 	
 deletebuckets:
 	@echo "delete buckets"
