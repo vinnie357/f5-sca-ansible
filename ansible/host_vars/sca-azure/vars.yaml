@@ -1,0 +1,44 @@
+sca:
+  name: "mazza-sca-dev"
+  compliance: "SCCA"
+  stig: true
+  git:
+  azure:
+    # gov or commercial
+    env: "gov"
+    location: "eastus"
+    arm:
+      url: "https://raw.githubusercontent.com/f5devcentral/f5-azure-saca/master/SACAv2/3NIC_1Tier_HA/azureDeploy.json"
+      #url: "https://raw.githubusercontent.com/f5devcentral/f5-azure-saca/master/SACAv2/3NIC_3Tier_HA/azureDeploy.json"
+    atc:
+      as3:
+        url: "https://raw.githubusercontent.com/f5devcentral/f5-azure-saca/master/SACAv2/AS3/sccaBaseline.json"
+    instance:
+      name: "f5vm"
+      type: "Standard_DS3_v2"
+    creds:
+      username: "xadmin"
+      bigipPass: "{{ vault_creds.bigipPass }}"
+      winPass: "{{ vault_creds.winPass }}"
+      authType: "password"
+      sshKey: "path to key"
+    timeZone: "UTC"
+    ntp:
+      server: 0.pool.ntp.org
+    dns:
+      prefix: "f5scadns"
+    network:
+      north:
+        trusted:
+          addressSubnet: "192.168.3.0/24"
+          addressStartIP: "192.168.3.4"
+        untrusted:
+          addressSubnet: "192.168.2.0/24"
+          addressStartIP: "192.168.2.4"
+      vdmsAddressSubnet: "192.168.4.0/24"
+      securityGroupAllowedSource: "*"
+  license:
+    bigip1: "{{ vault_license.bigip1 }}"
+    bigip2: "{{ vault_license.bigip2 }}"
+    bigip3: "{{ vault_license.bigip3 }}"
+    bigip4: "{{ vault_license.bigip4 }}"

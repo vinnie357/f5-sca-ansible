@@ -1,5 +1,5 @@
-- name: delete sca stack aws
-  hosts: sca_aws
+- name: delete sca stack azure
+  hosts: sca_azure
   gather_facts: false
   serial: 1
   vars:
@@ -7,8 +7,8 @@
     vault: "{{ inventory_dir }}/host_vars/{{ inventory_hostname }}/vault.yml"
   tasks:
     - name: delete sca stack
-      cloudformation:
-        stack_name: "{{sca.name}}"
-        state: "absent"
-        region: "{{awsRegion}}"
+      azure_rm_deployment:
+        resource_group: "{{sca.name}}_rg"
+        name: "{{sca.name}}"
+        state: absent
       delegate_to: localhost

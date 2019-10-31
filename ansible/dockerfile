@@ -1,13 +1,17 @@
 # final image
 ARG AWS_REGION="us-east-1"
+ARG AZURE_CLI_VERSION=2.0.73
 
 FROM alpine:latest
+ARG AZURE_CLI_VERSION
+ARG AWS_REGION
 #ansible
 RUN set -ex \
- && apk --update add rpm python3 openssl ca-certificates openssh-client bash jq \
- && apk --update add --virtual build-dependencies python3-dev libffi-dev openssl-dev build-base \
+ && apk --update add --no-cache rpm python3 openssl ca-certificates openssh-client bash jq \
+ && apk --update add --no-cache --virtual build-dependencies python3-dev libffi-dev openssl-dev build-base \
  && pip3 install --upgrade pip pycrypto cffi \
  && pip3 install ansible \
+ && pip3 install ansible[azure] \
  && pip3 install jinja2==2.10.1 \
  && pip3 install netaddr==0.7.19 \
  && pip3 install pbr==5.2.0 \
@@ -20,8 +24,7 @@ RUN set -ex \
  && pip3 install packaging \
  && pip3 install boto3 botocore \
  && pip3 install awscli --upgrade \
- && apk del build-dependencies \
- && rm -rf /var/cache/apk/* \
+ && apk del --purge build-dependencies \
  && mkdir -p /etc/ansible
 # python paths
 RUN if [ ! -e /usr/bin/python ]; then ln -sf python3 /usr/bin/python ; fi && \
@@ -53,6 +56,24 @@ echo "[default]" > /home/.aws/config &&\
 echo "output = text" >> /home/.aws/config &&\
 echo "region = ${AWS_REGION}" >> /home/.aws/config
 
+#azurecli
+RUN mkdir -p /azure-cli
+RUN apk add --no-cache curl tar bash jq python3 && \
+    ln -sf python3 /usr/bin/python
+RUN apk add --virtual=build sudo gcc libffi-dev musl-dev openssl-dev make python3-dev
+RUN pip3 install virtualenv &&\
+    python3 -m virtualenv /azure-cli
+RUN /azure-cli/bin/python -m pip --no-cache-dir install azure-cli==${AZURE_CLI_VERSION}
+RUN pip3 install --upgrade pip && \
+    ln -sf pip3 /usr/bin/pip
+RUN sudo touch /usr/bin/az
+RUN sudo chmod 755 /usr/bin/az
+RUN echo '#!/usr/bin/env sh' > /usr/bin/az
+RUN echo '/azure-cli/bin/python -m azure.cli "$@"' >> /usr/bin/az
+# clean up
+RUN set -ex \
+    && apk del --purge build \
+    && rm -rf /var/cache/apk/*
 
 # default shell
 # cat /etc/passwd | grep root

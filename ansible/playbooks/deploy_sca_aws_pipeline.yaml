@@ -1,5 +1,5 @@
-- name: create sca pipeline
-  hosts: sca-dev
+- name: create sca pipeline aws
+  hosts: sca_aws
   gather_facts: false
   serial: 1
   vars:

@@ -1,19 +1,11 @@
-- name: delete sca pipeline
-  hosts: sca-dev
+- name: delete sca pipeline aws
+  hosts: sca_aws
   gather_facts: false
   serial: 1
   vars:
     sca: "{{ hostvars[inventory_hostname]['sca'] }}"
     vault: "{{ inventory_dir }}/host_vars/{{ inventory_hostname }}/vault.yml"
   tasks:
-    # - name: revoke licenses
-    #   bigip_command:
-    #     commands: revoke sys license
-    #     sca:
-    #       server: "{{item.host}}"
-    #       password: secret
-    #       user: admin
-    #   delegate_to: localhost
     - name: delete sca pipeline
       cloudformation:
         stack_name: "{{sca.aws.cf.pipeline.name}}"

@@ -1,2 +1,4 @@
-[sca-dev]
-sca-01
+[sca_aws]
+sca-aws
+[sca_azure]
+sca-azure

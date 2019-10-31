@@ -1,0 +1,60 @@
+- name: create sca stack azure
+  hosts: sca_azure
+  gather_facts: false
+  serial: 1
+  vars:
+    sca: "{{ hostvars[inventory_hostname]['sca'] }}"
+    vault: "{{ inventory_dir }}/host_vars/{{ inventory_hostname }}/vault.yml"
+  tasks:
+    - name: create sca stack 3nic tier1
+      azure_rm_deployment:
+        resource_group: "{{sca.name}}_rg"
+        name: "{{sca.name}}"
+        parameters:
+          adminUsername:
+            value: "{{ sca.azure.creds.username }}"
+          authenticationType:
+            value: "{{ sca.azure.creds.authType }}"
+          adminPasswordOrKey:
+            value: "{{ sca.azure.creds.bigipPass }}"
+          WindowsAdminPassword:
+            value: "{{ sca.azure.creds.winPass }}"
+          declarationUrl:
+            value: "{{ sca.azure.atc.as3.url }}"
+          dnsLabelPrefix:
+            value: "{{ sca.azure.dns.prefix }}"
+          instanceName:
+            value: "{{ sca.azure.instance.name }}"
+          instanceType:
+            value: "{{ sca.azure.instance.type }}"
+          licenseKey1:
+            value: "{{sca.license.bigip1}}"
+          licenseKey2:
+            value: "{{sca.license.bigip2}}"
+          STIGDevice:
+            value: "{{ sca.stig }}"
+          NorthTrustedAddressStartIP:
+            value: "{{ sca.azure.network.north.trusted.addressStartIP }}"
+          NorthTrustedAddressSubnet:
+            value: "{{ sca.azure.network.north.trusted.addressSubnet }}"
+          NorthUntrustedAddressStartIP:
+            value: "{{ sca.azure.network.north.untrusted.addressStartIP }}"
+          NorthUntrustedAddressSubnet:
+            value: "{{ sca.azure.network.north.untrusted.addressSubnet }}"
+          VDMSAddressSubnet:
+            value: "{{ sca.azure.network.vdmsAddressSubnet }}"
+          ntpServer:
+            value: "{{ sca.azure.ntp.server }}"
+          restrictedSrcAddress:
+            value: "{{ sca.azure.network.securityGroupAllowedSource }}"
+          timeZone:
+            value: "{{ sca.azure.timeZone }}"         
+        template_link: "{{ sca.azure.arm.url }}"
+      register: azure
+      delegate_to: localhost
+    - name: Add new instance to host group
+      add_host:
+        hostname: "{{ item['ips'][0].public_ip }}"
+        groupname: azure_vms
+      loop: "{{ azure.deployment.instances }}"
+      delegate_to: localhost

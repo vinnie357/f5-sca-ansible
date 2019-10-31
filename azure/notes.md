@@ -1,0 +1,1 @@
+credentials are passed to azure-cli and ansible via enviroment variables at run time.

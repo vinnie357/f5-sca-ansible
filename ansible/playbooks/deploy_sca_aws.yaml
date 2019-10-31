@@ -1,5 +1,5 @@
-- name: create sca stack
-  hosts: sca-dev
+- name: create sca stack aws
+  hosts: sca_aws
   gather_facts: false
   serial: 1
   vars:
